@@ -1,7 +1,6 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
     <head>
-        <title>My First Page</title>
         <style>
             body {
                 background: rgb(125, 198, 205);
@@ -64,35 +63,45 @@
                 font-size: 1.25em;
             }
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script>
+            /*global $*/
+            const topics = [ 'variables', 'datatypes', 'string-manipulation', 'operators', 'control-flow', 'loops', 'functions' ];
+            const topicElements = topics.forEach(function(topic, index) {
+                const $header = $('<h2>').addClass('topic-heading').text(topic);
+                const $div = $('<div>').addClass('code').attr('id', topic).append($header);
+                $.get(`/studies/${topic}.js`, function (response) {
+                    const split = response.split('\n');
+                    const $splitElements = split.map(function(line, index) {
+                        const $line = $('<div>').addClass('line');
+                        const $lineNumber = $('<div>').addClass('line-number').text(index);
+                        const $content = $('<div>').addClass('line-content').text(line);
+                        return $line.append($lineNumber, $content);
+                    });
+                    $div.append($splitElements);
+                    $div.appendTo('.content');
+                })
+            });
+        </script>
+        <link rel="stylesheet" href="css/studies.css" type="text/css" />
+        <title>Studies</title>
     </head>
-    
     <body>
         <div id="all-contents">
-            <nav>
-                <header>A header</header>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="portfolio.html">Portfolio</a></li>
-                    <li><a href="studies.html">Studies</a></li>
-                </ul>
-            </nav>
-            <main>
-                <div class="sidebar">
-                    <img src="https://scontent-dfw5-2.xx.fbcdn.net/v/t1.0-1/c27.0.160.160/p160x160/247775_585541008136946_988289022_n.jpg?_nc_cat=0&oh=391b8f17c287e92943589206501ee356&oe=5BD127CE">
-                </div>
-                <div class="content">
-                    <header>Isaac Kelly</header>
-                    <p>Hopeful Programming student, otherwise broke</p>
-                    <section class="interests">
-                        <header>Interests</header>
-                        <ul>
-                            <li>Martial Arts</li>
-                            <li>Coding</li>
-                            <li>Star Wars</li>
-                        </ul>
-                    </section>
-                </div>
-            </main>
-        </div>
+        <nav>
+            <header>Isaac's Website</header>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="studies.html">Studies</a></li>
+            </ul>
+        </nav>
+        <main>
+            <div class="content">
+                <h1>Javascript</h1>
+                
+            </div>
+        </main>
+    </div>
     </body>
 </html>
